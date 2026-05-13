@@ -10,6 +10,7 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/gcpdevops:$COMMIT_SHA'
 
+
 # Specify logging options to resolve the service account bucket error
 options:
   logging: CLOUD_LOGGING_ONLY
