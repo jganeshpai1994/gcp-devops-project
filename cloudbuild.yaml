@@ -3,13 +3,13 @@ steps:
   - name: 'docker'
     args: [
       'build',
-      '-t', 'gcr.io/$PROJECT_ID/gcpdevops:$COMMIT_SHA',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp:$COMMIT_SHA',
       '.' 
     ]
+
 # This tells Cloud Build to push the image to the specified location
 images:
-  - 'gcr.io/$PROJECT_ID/gcpdevops:$COMMIT_SHA'
-
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp:$COMMIT_SHA'
 
 # Specify logging options to resolve the service account bucket error
 options:
