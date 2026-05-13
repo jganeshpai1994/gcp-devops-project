@@ -9,3 +9,7 @@ steps:
 # This tells Cloud Build to push the image to the specified location
 images:
   - 'gcr.io/$PROJECT_ID/gcpdevops:$COMMIT_SHA'
+
+# Specify logging options to resolve the service account bucket error
+options:
+  logging: CLOUD_LOGGING_ONLY
