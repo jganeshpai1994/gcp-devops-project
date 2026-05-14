@@ -3,13 +3,17 @@ steps:
   - name: 'docker'
     args: [
       'build',
-      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp:$COMMIT_SHA',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp',
       '.' 
     ]
 
-# This tells Cloud Build to push the image to the specified location
-images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp:$COMMIT_SHA'
+  # Push the container image
+  - name: 'docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp']
+
+  # Apply the Kubernetes manifest
+  - name: 'kubectl'
+    args: ['apply', '-f', 'gke.yaml']
 
 # Specify logging options to resolve the service account bucket error
 options:
