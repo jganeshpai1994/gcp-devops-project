@@ -32,16 +32,20 @@ spec:
             memory: 256Mi
 
 ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: gke-devopsapp-service
-#   namespace: gcp-devops-prod
-# spec:
-#   type: LoadBalancer
-#   selector:
-#     app: gke-devopsapp
-#   ports:
-#   - port: 80
-#     targetPort: 5000
-#     protocol: TCP
+apiVersion: v1
+kind: Service
+metadata:
+  name: gke-devopsapp-service
+  namespace: gcp-devops-prod
+  labels:
+    app.kubernetes.io/managed-by: "gcp-cloud-build-deploy"
+spec:
+  type: LoadBalancer
+  selector:
+    app: gke-devopsapp
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+
+
