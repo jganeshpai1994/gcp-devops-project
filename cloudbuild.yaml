@@ -1,0 +1,23 @@
+steps:
+  # Build the container image
+  - name: 'docker'
+    args: [
+      'build',
+      '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp',
+      '.' 
+    ]
+
+  # Push the container image
+  - name: 'docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp']
+
+  # Apply the Kubernetes manifest
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'gke.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=gcp-devops-project'
+
+# Specify logging options to resolve the service account bucket error
+options:
+  logging: CLOUD_LOGGING_ONLY
