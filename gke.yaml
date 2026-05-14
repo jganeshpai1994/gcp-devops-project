@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gke-devopsapp
+  namespace: gcp-devops-prod
+  labels:
+    app: gke-devopsapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gke-devopsapp
+  template:
+    metadata:
+      labels:
+        app: gke-devopsapp
+    spec:
+      containers:
+      - name: flask-app
+        image: us-central1-docker.pkg.dev/project-d4fc71cf-2631-4f82-8eb/devops-registry/devopsapp:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gke-devopsapp-service
+  namespace: gcp-devops-prod
+  labels:
+    app.kubernetes.io/managed-by: "gcp-cloud-build-deploy"
+spec:
+  type: LoadBalancer
+  selector:
+    app: gke-devopsapp
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
