@@ -9,7 +9,7 @@ steps:
 
   # Push the container image
   - name: 'docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp']
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/devops-registry/devopsapp-dev']
 
   # Apply the Kubernetes manifest
   - name: 'gcr.io/cloud-builders/kubectl'
